@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -45,4 +46,23 @@ public class ServiceProduit implements IServiceProduit{
     public Produit getProduct(Long id) {
         return produitRepository.findById(id).orElse(null);
     }
+
+    @Override
+    public void editProduct(Long id, Produit editedProduct) {
+        Optional<Produit> existingProductOptional = produitRepository.findById(id);
+            if (existingProductOptional.isPresent()) {
+                Produit existingProduct = existingProductOptional.get();
+
+                existingProduct.setNom(editedProduct.getNom());
+                existingProduct.setPrix(editedProduct.getPrix());
+                existingProduct.setQuantite(editedProduct.getQuantite());
+                existingProduct.setCategorie(editedProduct.getCategorie());
+
+                produitRepository.save(existingProduct);
+            }
+
+    }
 }
+
+
+

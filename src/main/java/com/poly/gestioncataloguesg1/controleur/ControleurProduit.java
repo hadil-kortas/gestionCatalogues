@@ -1,14 +1,13 @@
 package com.poly.gestioncataloguesg1.controleur;
 
+import com.poly.gestioncataloguesg1.entities.Categorie;
 import com.poly.gestioncataloguesg1.entities.Produit;
 import com.poly.gestioncataloguesg1.service.ServiceCategorie;
 import com.poly.gestioncataloguesg1.service.ServiceProduit;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,10 +35,42 @@ public class ControleurProduit {
         return "redirect:/index";
     }
 
-    @GetMapping("/formajout")
-    public String form(Model m)
+    @GetMapping("/addProduct")
+    public String addForm(Model m)
     {
+        m.addAttribute("produit", new Produit());
         m.addAttribute("categories", serviceCategorie.getAllCategories());
         return "ajouterProduit";
     }
+
+    @PostMapping("/addProduct")
+    public String saveProduct(@ModelAttribute Produit p ){
+        serviceProduit.saveProduct(p);
+        return "redirect:/index";
+    }
+
+    @GetMapping("/product/{id}")
+    public String getProduct(@PathVariable("id") Long id, Model model) {
+        Produit produit = serviceProduit.getProduct(id);
+        model.addAttribute("product", produit);
+        return "voirProduit"; // Create a new HTML template for viewing a single product
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editForm(@PathVariable("id") Long id, Model model) {
+        Produit produit = serviceProduit.getProduct(id);
+        model.addAttribute("product", produit);
+        model.addAttribute("categories", serviceCategorie.getAllCategories());
+        return "editProduit";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String editProduct(@PathVariable("id") Long id, @ModelAttribute Produit editedProduct) {
+        serviceProduit.editProduct(id, editedProduct);
+        return "redirect:/index";
+    }
+
+
+
+
 }
