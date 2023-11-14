@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />    <link rel="stylesheet" href="/css/styles.css">
+    <meta charset="UTF-8">
+    <title>Vue Product</title>
+</head>
+<body>
+
+<header>
+    <nav id="mainNav" class="navbar navbar-expand-md sticky-top navbar-shrink py-3 navbar-light">
+        <div class="container">
+            <div id="navcol-1" class="collapse navbar-collapse">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link active" href="#">Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Catégories</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Contacts</a></li>
+            </div>
+        </div>
+    </nav>
+</header>
+<div class="card-body text-center px-4 py-5 px-md-5">
+    <a th:href="@{/formajout}" class="btn btn-primary">Ajouter Produit</a>
+
+    <form class="form-inline" th:action="@{/index}" method="get">
+        <div class="form-group mb-2">
+            <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="Mot Cle:">
+        </div>
+        <div class="form-group mx-sm-3 mb-2">
+
+            <label for="inputPassword2" class="sr-only">Mot Cle</label>
+            <input type="text" class="form-control" id="inputPassword2" name="mc">
+        </div>
+        <button type="submit" class="btn btn-primary fa fa-search" ></button>
+    </form>
+
+    <table class="table table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">
+                #
+            </th>
+            <th scope="col">
+                Nom
+            </th>
+            <th scope="col">
+                Prix
+            </th>
+            <th scope="col">
+                Quantite
+            </th>
+            <th>
+                Categorie
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="p:${products}">
+            <td th:text="${p.id}" ></td>
+            <td th:text="${p.nom}" ></td>
+            <td th:text="${p.prix}" ></td>
+            <td th:text="${p.quantite}" ></td>
+            <td th:text="${p.categorie.nom}" ></td>
+            <td>
+                <a th:href="@{'/delete/'+${p.id}}" class="btn btn-danger fa fa-trash"></a>
+                <a href="" class="btn btn-success fa fa-edit"></a>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
