@@ -12,6 +12,8 @@ public interface IServiceProduit {
     public List<Produit> getProductByCat(Long idCat);
     public void deleteProduct(Long id);
     public Produit getProduct (Long id);
-
-
+    public editProduct(Long id, Produit editedProduct);
 }
+
+
+

@@ -42,4 +42,15 @@ public class ControleurProduit {
         m.addAttribute("categories", serviceCategorie.getAllCategories());
         return "ajouterProduit";
     }
+
+    @GetMapping("/product/{id}")
+    public String getProduct(@PathVariable("id") Long id, Model model) {
+        Produit produit = serviceProduit.getProduct(id);
+        model.addAttribute("product", produit);
+        return "voirProduit"; // Create a new HTML template for viewing a single product
+    }
+
+
+
+
 }
