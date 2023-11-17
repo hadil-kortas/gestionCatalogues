@@ -44,7 +44,7 @@ public class GestionCataloguesG1Application implements CommandLineRunner {
         produitRepository.save(new Produit(null, "souris", 25, 7, categorieRepository.findById(1L).get()));
 
 
-        produitRepository.findByNomContains("e");
+        //produitRepository.findByNomContains("e");
         produitRepository.getProductsByCat(1L);
 
         // nzid .get bech traja3li catégorie
