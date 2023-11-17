@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 public class Produit {
     @Id // primary key de l'id dans la table produit
     @GeneratedValue(strategy = GenerationType.IDENTITY) // l'id est auto increment dans la base de donnée
-    private Long id;
+    private Integer id;
     @NotEmpty
     @Size(min = 1, max = 20)
     private String nom;
@@ -33,3 +33,4 @@ public class Produit {
     private Categorie categorie;
 
 }
+

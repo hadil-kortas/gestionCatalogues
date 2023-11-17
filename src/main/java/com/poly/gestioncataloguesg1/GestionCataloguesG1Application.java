@@ -39,11 +39,9 @@ public class GestionCataloguesG1Application implements CommandLineRunner {
         categorieRepository.save(new Categorie(null, "informatique", null));
         categorieRepository.save(new Categorie(null, "Génie civile", null));
         categorieRepository.save(new Categorie(null, "informatique de gestion", null));
-        produitRepository.save(new Produit(null, "ecran", 500, 5, categorieRepository.findById(1L).get()));
-        produitRepository.save(new Produit(null, "pc portable", 3000, 5, categorieRepository.findById(1L).get()));
-        produitRepository.save(new Produit(null, "souris", 25, 7, categorieRepository.findById(1L).get()));
-
-
+        //produitRepository.save(new Produit(null, "ecran", 500, 5, categorieRepository.findById(1L).get()));
+        //produitRepository.save(new Produit(null, "pc portable", 3000, 5, categorieRepository.findById(1L).get()));
+        //produitRepository.save(new Produit(null, "souris", 25, 7, categorieRepository.findById(1L).get()));
         //produitRepository.findByNomContains("e");
         produitRepository.getProductsByCat(1L);
 

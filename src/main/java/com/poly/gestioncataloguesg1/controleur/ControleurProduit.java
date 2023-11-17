@@ -4,11 +4,13 @@ import com.poly.gestioncataloguesg1.entities.Categorie;
 import com.poly.gestioncataloguesg1.entities.Produit;
 import com.poly.gestioncataloguesg1.service.ServiceCategorie;
 import com.poly.gestioncataloguesg1.service.ServiceProduit;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -52,7 +54,11 @@ public class ControleurProduit {
     }
 
     @PostMapping("/addProduct")
-    public String saveProduct(@ModelAttribute Produit p ){
+    public String saveProduct(@Valid Produit p, BindingResult bindingResult, Model m){
+        if (bindingResult.hasErrors()) {
+            m.addAttribute("categories", serviceCategorie.getAllCategories());
+            return "ajouterProduit";
+        }
         serviceProduit.saveProduct(p);
         return "redirect:/index";
     }

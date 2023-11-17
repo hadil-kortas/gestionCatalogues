@@ -16,33 +16,38 @@
             <form method="post" th:action="@{/addProduct}">
                 <div class="form-group">
                     <label for="nom">Name</label>
-                    <input type="text" class="form-control" id="nom" name="nom">
+                    <input type="text" class="form-control" id="nom" name="nom" placeholder="Add name" th:value="${produit.nom}">
+                    <span class="text-danger" th:errors="${produit.nom}"></span>
                 </div>
 
                 <div class="form-group mt-3">
                     <label for="prix">Price</label>
-                    <input type="number" class="form-control" id="prix" name="prix">
+                    <input type="number" class="form-control" id="prix" name="prix" placeholder="Enter price" th:value="${produit.prix}">
+                    <span class="text-danger" th:errors="${produit.prix}"></span>
                 </div>
                 <div class="form-group mt-3">
                     <label for="quantite">Quantity</label>
-                    <input type="number" class="form-control" id="quantite" name="quantite">
+                    <input type="number" class="form-control" id="quantite" name="quantite" placeholder="Enter quantity" th:value="${produit.quantite}">
+                    <span class="text-danger" th:errors="${produit.quantite}"></span>
                 </div>
                 <div class="form-group mt-3">
                     <label for="categorie">Categoriy:</label>
                     <select class="form-control" id="categorie" name="categorie">
-                        <option selected="selected" hidden=""></option>
+                        <option value="" selected="selected" disabled hidden>Select a category</option>
                         <option th:each="c:${categories}"  th:value="${c.id}" th:text="${c.nom}"
-                                th:selected="${produit.categorie!=null && produit.categorie.id==c.id}"></option>
+                                th:selected="${produit.id!=null && produit.categorie.id==c.id}"></option>
                     </select>
                 </div>
-                <div class="text-center mt-3" >
-                <a th:href="@{/index}" class="btn btn-outline-info">Cancel</a>
-                <button  type="submit" class="btn btn-outline-info">Save product</button>
-                </div>
+
             </form>
 
         </div>
 
+    </div>
+    <div class="text-center mt-5" >
+        <a th:href="@{/index}" class="btn btn-outline-info">Cancel</a>
+        <button  type="submit" class="btn btn-outline-info">Save product</button>
+        <input type="hidden" name="id" th:value="${produit.id}">
     </div>
 
 </div>
