@@ -5,6 +5,8 @@ import com.poly.gestioncataloguesg1.entities.Produit;
 import com.poly.gestioncataloguesg1.service.ServiceCategorie;
 import com.poly.gestioncataloguesg1.service.ServiceProduit;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,10 +22,16 @@ public class ControleurProduit {
     ServiceProduit serviceProduit;
     ServiceCategorie serviceCategorie;
     @GetMapping("/index")
-    public String getAllProducts(Model m, @RequestParam(name = "mc", defaultValue = "") String mc)
+    public String getAllProducts(Model m,
+                                 @RequestParam(name = "mc", defaultValue = "") String mc,
+                                 @RequestParam(name = "page", defaultValue = "0")int page,
+                                 @RequestParam(name = "size", defaultValue = "5") int size)
     {
-        List<Produit>l=serviceProduit.getProductByMc(mc);
-        m.addAttribute("products",l);
+        Page<Produit> l=serviceProduit.getProductByMc(mc, PageRequest.of(page,size));
+        m.addAttribute("mc",mc);
+        m.addAttribute("products",l.getContent());
+        m.addAttribute("pages", new int[l.getTotalPages()]);
+        m.addAttribute("currentpage", l.getNumber());
 
         return "vue";
     }
