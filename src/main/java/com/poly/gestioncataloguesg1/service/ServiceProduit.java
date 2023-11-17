@@ -30,7 +30,7 @@ public class ServiceProduit implements IServiceProduit{
 
     @Override
     public Page<Produit> getProductByMc(String mc, Pageable p) {
-        return produitRepository.findByNomContains(mc,p);
+        return produitRepository.findByNomContains(mc, p);
     }
 
     @Override
