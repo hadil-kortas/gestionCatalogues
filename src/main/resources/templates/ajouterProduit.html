@@ -37,6 +37,13 @@
                         <option th:each="c:${categories}"  th:value="${c.id}" th:text="${c.nom}"
                                 th:selected="${produit.id!=null && produit.categorie.id==c.id}"></option>
                     </select>
+                    <span class="text-danger" th:errors="${produit.categorie}"></span>
+                </div>
+
+                <div class="text-center mt-5" >
+                    <a th:href="@{/index}" class="btn btn-outline-info">Cancel</a>
+                    <button  type="submit" class="btn btn-outline-info">Save product</button>
+                    <input type="hidden" name="id" th:value="${produit.id}">
                 </div>
 
             </form>
@@ -44,11 +51,7 @@
         </div>
 
     </div>
-    <div class="text-center mt-5" >
-        <a th:href="@{/index}" class="btn btn-outline-info">Cancel</a>
-        <button  type="submit" class="btn btn-outline-info">Save product</button>
-        <input type="hidden" name="id" th:value="${produit.id}">
-    </div>
+
 
 </div>
 
