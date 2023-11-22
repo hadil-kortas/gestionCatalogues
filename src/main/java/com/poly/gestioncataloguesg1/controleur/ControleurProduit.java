@@ -73,7 +73,7 @@ public class ControleurProduit {
     }
 
     @GetMapping("/edit/{id}")
-    public String editForm(@PathVariable("id") Long id, Model model) {
+    public String editForm(@PathVariable("id") Long id, Model model ) {
         Produit produit = serviceProduit.getProduct(id);
         model.addAttribute("product", produit);
         model.addAttribute("categories", serviceCategorie.getAllCategories());
