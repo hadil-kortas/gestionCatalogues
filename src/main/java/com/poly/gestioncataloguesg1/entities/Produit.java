@@ -31,6 +31,7 @@ public class Produit {
     @ManyToOne
     @NotNull(message = "category should not be null")
     private Categorie categorie;
+    private String photo;
 
 }
 

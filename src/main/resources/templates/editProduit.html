@@ -34,6 +34,11 @@
                         <option th:each="c : ${categories}" th:text="${c.nom}" th:value="${c.id}" th:selected="${c.id eq product.categorie.id}"></option>
                     </select>
                 </div>
+                <div>
+                    Edit image:
+                    <input type="file" accept="image/*"  name="image">
+                </div>
+
                 <div class="text-center mt-3">
                     <a th:href="@{/index}" class="btn btn-outline-info">Cancel</a>
                     <button type="submit" class="btn btn-outline-info">Update Product</button>

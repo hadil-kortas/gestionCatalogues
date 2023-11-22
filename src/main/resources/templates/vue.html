@@ -44,6 +44,9 @@
                 #
             </th>
             <th scope="col">
+                Image
+            </th>
+            <th scope="col">
                 Name
             </th>
             <th scope="col">
@@ -55,11 +58,22 @@
             <th>
                 Category
             </th>
+            <th>
+                Actions
+            </th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="p:${products}">
+
             <td th:text="${p.id}" ></td>
+            <td th:if="${p.photo=='' || p.photo==null}">
+                <img src="/photos/inconnu.jpg" width="60" height="60">
+            </td>
+            <td th:unless="${p.photo=='' || p.photo==null}">
+                <img th:src="${'/photos/'+p.photo}" width="60" height="60">
+
+            </td>
             <td th:text="${p.nom}" ></td>
             <td th:text="${p.prix}" ></td>
             <td th:text="${p.quantite}" ></td>

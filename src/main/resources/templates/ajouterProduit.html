@@ -13,7 +13,7 @@
     <div class="card">
         <div class="card-header bg-info text-white"><h3>Add Product </h3></div>
         <div class="card-body">
-            <form method="post" th:action="@{/addProduct}">
+            <form method="post" th:action="@{/addProduct}" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="nom">Name</label>
                     <input type="text" class="form-control" id="nom" name="nom" placeholder="Add name" th:value="${produit.nom}">
@@ -39,12 +39,17 @@
                     </select>
                     <span class="text-danger" th:errors="${produit.categorie}"></span>
                 </div>
+                <div>
+                Add image:
+                <input type="file" accept="image/*"  name="image">
+                </div>
 
                 <div class="text-center mt-5" >
                     <a th:href="@{/index}" class="btn btn-outline-info">Cancel</a>
                     <button  type="submit" class="btn btn-outline-info">Save product</button>
-                    <input type="hidden" name="id" th:value="${produit.id}">
                 </div>
+
+
 
             </form>
 

@@ -12,7 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -54,12 +56,12 @@ public class ControleurProduit {
     }
 
     @PostMapping("/addProduct")
-    public String saveProduct(@Valid Produit p, BindingResult bindingResult, Model m){
+    public String saveProduct(@Valid Produit p, BindingResult bindingResult, Model m, @RequestParam("image") MultipartFile mf) throws IOException {
         if (bindingResult.hasErrors()) {
             m.addAttribute("categories", serviceCategorie.getAllCategories());
             return "ajouterProduit";
         }
-        serviceProduit.saveProduct(p);
+        serviceProduit.saveProduct(p,mf);
         return "redirect:/index";
     }
 
