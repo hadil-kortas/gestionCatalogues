@@ -32,6 +32,5 @@ public class Produit {
     @NotNull(message = "category should not be null")
     private Categorie categorie;
     private String photo;
-
 }
 

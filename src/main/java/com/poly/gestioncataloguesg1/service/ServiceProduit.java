@@ -3,7 +3,6 @@ package com.poly.gestioncataloguesg1.service;
 import com.poly.gestioncataloguesg1.dao.ProduitRepository;
 import com.poly.gestioncataloguesg1.entities.Produit;
 import lombok.AllArgsConstructor;
-import org.aspectj.apache.bcel.util.ClassPath;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -64,21 +63,29 @@ public class ServiceProduit implements IServiceProduit{
         return produitRepository.findById(id).orElse(null);
     }
 
+
     @Override
-    public void editProduct(Long id, Produit editedProduct) {
+    public void editProduct(Long id, Produit editedProduct, MultipartFile mf) throws IOException {
         Optional<Produit> existingProductOptional = produitRepository.findById(id);
-            if (existingProductOptional.isPresent()) {
-                Produit existingProduct = existingProductOptional.get();
+        if (existingProductOptional.isPresent()) {
+            Produit existingProduct = existingProductOptional.get();
 
-                existingProduct.setNom(editedProduct.getNom());
-                existingProduct.setPrix(editedProduct.getPrix());
-                existingProduct.setQuantite(editedProduct.getQuantite());
-                existingProduct.setCategorie(editedProduct.getCategorie());
+            existingProduct.setNom(editedProduct.getNom());
+            existingProduct.setPrix(editedProduct.getPrix());
+            existingProduct.setQuantite(editedProduct.getQuantite());
+            existingProduct.setCategorie(editedProduct.getCategorie());
 
-                produitRepository.save(existingProduct);
+            if (mf != null && !mf.isEmpty()) {
+                String newImageName = saveImage(mf);
+                existingProduct.setPhoto(newImageName);
             }
 
+            produitRepository.save(existingProduct);
+        }
+
+
     }
+
 
     public String saveImage(MultipartFile mf) throws IOException {
         String nomphoto=mf.getOriginalFilename();

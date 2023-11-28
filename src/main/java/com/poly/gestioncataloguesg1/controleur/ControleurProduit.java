@@ -81,8 +81,8 @@ public class ControleurProduit {
     }
 
     @PostMapping("/edit/{id}")
-    public String editProduct(@PathVariable("id") Long id, @ModelAttribute Produit editedProduct) {
-        serviceProduit.editProduct(id, editedProduct);
+    public String editProduct(@PathVariable("id") Long id, @ModelAttribute Produit editedProduct, @RequestParam("image") MultipartFile mf) throws IOException {
+        serviceProduit.editProduct(id, editedProduct, mf);
         return "redirect:/index";
     }
 

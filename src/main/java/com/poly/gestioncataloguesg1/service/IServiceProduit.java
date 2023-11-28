@@ -12,11 +12,12 @@ public interface IServiceProduit {
 
     public void saveProduct(Produit p, MultipartFile mf) throws IOException;
     public List<Produit> getAllProducts();
-    public Page<Produit> getProductByMc(String mc, Pageable p);
+    public Page<Produit> getProductByMc(String mc, Pageable t);
     public List<Produit> getProductByCat(Long idCat);
     public void deleteProduct(Long id);
     public Produit getProduct (Long id);
-    public void editProduct(Long id, Produit editedProduct);
+
+    public void editProduct(Long id, Produit editedProduct, MultipartFile mf) throws IOException;
 }
 
 
