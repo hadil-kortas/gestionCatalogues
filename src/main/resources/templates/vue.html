@@ -85,8 +85,12 @@
             <td th:text="${p.quantite}" ></td>
             <td th:text="${p?.categorie?.nom}" ></td>
 
-            <td th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+            <td>
                 <a th:href="@{'/user/product/'+${p.id}}" class="btn btn-success fa fa-eye"></a>
+            </td>
+
+            <td th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+
                 <a th:href="@{'/admin/delete/'+${p.id}}" class="btn btn-danger fa fa-trash"></a>
                 <a th:href="@{'/admin/edit/'+${p.id}}" class="btn btn-warning fa fa-edit"></a>
             </td>
