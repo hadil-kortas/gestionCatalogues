@@ -38,7 +38,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception
     {
         httpSecurity.formLogin(form->form.permitAll());
+        httpSecurity.authorizeHttpRequests(authorize->authorize.requestMatchers("/admin/**").hasRole("ADMIN"));
+        httpSecurity.authorizeHttpRequests(authorize->authorize.requestMatchers("/user/**").hasRole("USER"));
         httpSecurity.authorizeHttpRequests(authorize->authorize.anyRequest().authenticated());
+        httpSecurity.exceptionHandling(exception->exception.accessDeniedPage("/errorPage"));
         return httpSecurity.build();
 
     }
