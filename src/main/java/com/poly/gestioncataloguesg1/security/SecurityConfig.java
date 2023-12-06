@@ -14,11 +14,10 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 
 public class SecurityConfig {
-    @Bean
-    PasswordEncoder passwordEncoder()
-    {
+
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
+    } // je peux linjecter par tous
     @Bean
     InMemoryUserDetailsManager inMemoryUserDetailsManager()
     {

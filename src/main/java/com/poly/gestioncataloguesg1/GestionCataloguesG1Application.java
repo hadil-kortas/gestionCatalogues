@@ -4,12 +4,16 @@ import com.poly.gestioncataloguesg1.dao.CategorieRepository;
 import com.poly.gestioncataloguesg1.dao.ProduitRepository;
 import com.poly.gestioncataloguesg1.entities.Categorie;
 import com.poly.gestioncataloguesg1.entities.Produit;
+import com.poly.gestioncataloguesg1.security.service.IAccountService;
 import com.poly.gestioncataloguesg1.service.ServiceProduit;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
@@ -48,6 +52,26 @@ public class GestionCataloguesG1Application implements CommandLineRunner {
         //1L khater Long
 
 
+    }
+
+    @Bean
+    PasswordEncoder passwordEncoder()
+    {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    CommandLineRunner commandLineRunner(IAccountService accountService) {
+        return args -> {
+            accountService.addRole("USER");
+            accountService.addRole("ADMIN");
+            accountService.addUser("user", "123", "user@gmail.com");
+            accountService.addUser("admin","123","admin@gmail.com");
+            accountService.addroletoUser("user","USER");
+            accountService.addroletoUser("admin","ADMIN");
+            accountService.addroletoUser("admin", "USER");
+
+        };
     }
 }
 // l constructeur ya3mel injection w y3awedh l auto wired
