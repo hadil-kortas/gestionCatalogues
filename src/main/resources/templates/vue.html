@@ -30,14 +30,15 @@
     </nav>
 </header>
 <div class="card-body text-center px-4 py-5 px-md-5">
-    <a th:href="@{/admin/addProduct}" class="btn btn-primary text-start" style="position: absolute; top: 10px; right: 10px;z-index: 9999;">Add Product</a>
+
+    <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/admin/addProduct}" class="btn btn-primary text-start" style="position: absolute; top: 10px; right: 10px;z-index: 9999;">Add Product</a>
 
     <form style=" display: flex; margin-top: 50px;flex-direction: row;  " class="form-inline" th:action="@{/user/index}" method="get">
 
         <div style="width: 90%; height: 90% " class="form-group mx-sm-3 mb-2">
 
             <label for="inputPassword2" class="sr-only">Key Word</label>
-            <input style="height: 40px" type="text" class="form-control" id="inputPassword2" name="mc" >
+            <input style="height: 40px" type="text" class="form-control" id="inputPassword2" name="mc" th:value="${mc}" placeholder="Search..." >
         </div>
 
         <button style="height: 40px" type="submit" class="btn btn-primary fa fa-search" ></button>
@@ -85,15 +86,22 @@
             <td th:text="${p.quantite}" ></td>
             <td th:text="${p?.categorie?.nom}" ></td>
 
+
+
+
+
             <td>
-                <a th:href="@{'/user/product/'+${p.id}}" class="btn btn-success fa fa-eye"></a>
+                <a th:if="${#authorization.expression('hasRole(''ADMIN'')')} or ${#authorization.expression('hasRole(''USER'')')}">
+                    <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                        <a th:href="@{'/admin/delete/'+${p.id}}" class="btn btn-danger fa fa-trash"></a>
+                        <a th:href="@{'/admin/edit/'+${p.id}}" class="btn btn-warning fa fa-edit"></a>
+                    </a>
+                    <a th:if="${#authorization.expression('hasRole(''USER'')')}">
+                        <a th:href="@{'/user/product/'+${p.id}}" class="btn btn-success fa fa-eye"></a>
+                    </a>
+                </a>
             </td>
 
-            <td th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
-
-                <a th:href="@{'/admin/delete/'+${p.id}}" class="btn btn-danger fa fa-trash"></a>
-                <a th:href="@{'/admin/edit/'+${p.id}}" class="btn btn-warning fa fa-edit"></a>
-            </td>
 
         </tr>
         </tbody>

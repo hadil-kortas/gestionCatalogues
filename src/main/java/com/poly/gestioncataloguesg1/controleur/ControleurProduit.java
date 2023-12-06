@@ -65,7 +65,7 @@ public class ControleurProduit {
         return "redirect:/user/index";
     }
 
-    @GetMapping("/product/{id}")
+    @GetMapping("/user/product/{id}")
     public String getProduct(@PathVariable("id") Long id, Model model) {
         Produit produit = serviceProduit.getProduct(id);
         model.addAttribute("product", produit);
@@ -83,7 +83,7 @@ public class ControleurProduit {
     @PostMapping("/admin/edit/{id}")
     public String editProduct(@PathVariable("id") Long id, @ModelAttribute Produit editedProduct, @RequestParam("image") MultipartFile mf) throws IOException {
         serviceProduit.editProduct(id, editedProduct, mf);
-        return "redirect:/index";
+        return "redirect:/user/index";
     }
 
    @GetMapping("/")
