@@ -73,6 +73,10 @@
             <artifactId>thymeleaf-extras-springsecurity6</artifactId>
         </dependency>
 
+        //springdoc swager
+
+
+//localhost/swager/ // un autre moyen pur tester
 
 
 

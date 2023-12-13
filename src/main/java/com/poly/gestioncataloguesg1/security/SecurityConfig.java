@@ -1,10 +1,14 @@
 package com.poly.gestioncataloguesg1.security;
 
+import com.poly.gestioncataloguesg1.security.service.UserDetailsServiceImplementation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -18,8 +22,11 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     } // je peux linjecter par tous
+
+    @Autowired
+    public UserDetailsServiceImplementation userDetailsServiceImplementation;
     @Bean
-    InMemoryUserDetailsManager inMemoryUserDetailsManager()
+    public InMemoryUserDetailsManager inMemoryUserDetailsManager()
     {
         return new InMemoryUserDetailsManager(
                 User.withUsername("user")
@@ -36,14 +43,20 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception
     {
-        httpSecurity.formLogin(form->form.permitAll());
-        httpSecurity.authorizeHttpRequests(authorize->authorize.requestMatchers("/admin/**").hasRole("ADMIN"));
-        httpSecurity.authorizeHttpRequests(authorize->authorize.requestMatchers("/user/**").hasRole("USER"));
+        //httpSecurity.formLogin(form->form.permitAll());
+        httpSecurity.httpBasic(Customizer.withDefaults());
+        httpSecurity.authorizeHttpRequests(authorize->authorize.requestMatchers("/admin/**").hasAuthority("ADMIN"));
+        httpSecurity.authorizeHttpRequests(authorize->authorize.requestMatchers("/user/**").hasAuthority("USER"));
         httpSecurity.authorizeHttpRequests(authorize->authorize.anyRequest().authenticated());
         httpSecurity.exceptionHandling(exception->exception.accessDeniedPage("/errorPage"));
+        httpSecurity.userDetailsService(userDetailsServiceImplementation);
+        httpSecurity.csrf(c->c.disable());
         return httpSecurity.build();
+
+        //ki neskhdem mvc 3adi nkhalyoha active khater tpritecti a ki nekhdem jeton w bech ntesti na7yoha bech najmou ntasstiyu
 
     }
 }
 
 //bcrypt
+

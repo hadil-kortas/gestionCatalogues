@@ -60,7 +60,7 @@ public class GestionCataloguesG1Application implements CommandLineRunner {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
+    //@Bean
     CommandLineRunner commandLineRunner(IAccountService accountService) {
         return args -> {
             accountService.addRole("USER");
